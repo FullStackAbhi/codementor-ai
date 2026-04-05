@@ -4,12 +4,12 @@ const cors = require("cors")
 
 const app = express()
 
-app.set('trust proxy', 1)  // ✅ add this line
+app.set('trust proxy', 1)
 
 app.use(express.json())
 app.use(cookieParser())
 
-const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
+const allowedOrigin = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "")  // ✅ removes trailing slash
 
 app.use(cors({
     origin: allowedOrigin,
