@@ -6,15 +6,16 @@ const app = express()
 
 app.set('trust proxy', 1)
 
-app.use(express.json())
-app.use(cookieParser())
-
-const allowedOrigin = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "")  // ✅ removes trailing slash
+const allowedOrigin = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "")
 
 app.use(cors({
     origin: allowedOrigin,
     credentials: true
 }))
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))  // ✅ add this
+app.use(cookieParser())
 
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
